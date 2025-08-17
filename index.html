@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Happy Birthday Khushboo 🎂</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Typed.js -->
+  <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+  <!-- Confetti / Fireworks -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #ffdde1, #ee9ca7);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    .step { display: none; text-align: center; padding: 40px 20px; }
+    .step.active { display: block; }
+    .btn {
+      background: linear-gradient(to right, #ff758c, #ff7eb3);
+      color: white; font-size: 1.1rem; padding: 12px 24px;
+      border-radius: 9999px; cursor: pointer; transition: 0.25s;
+    }
+    .btn:hover { transform: scale(1.05); }
+    .text-gradient {
+      background: linear-gradient(to right, #ff6a00, #ee0979);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .emoji { font-size: 3rem; animation: float 3s ease-in-out infinite; }
+    @keyframes float { 0%{transform:translateY(0)}50%{transform:translateY(-12px)}100%{transform:translateY(0)} }
+    .gallery img { border-radius: 18px; box-shadow: 0 8px 16px rgba(0,0,0,0.2); transition: transform 0.25s; }
+    .gallery img:hover { transform: scale(1.04); }
+  </style>
+</head>
+<body class="flex items-center justify-center">
+
+  <!-- 🎶 Background Music -->
+  <audio id="bg-music" loop>
+    <source src="birthday.mp3" type="audio/mpeg">
+    Your browser does not support audio.
+  </audio>
+  <button id="music-btn" class="fixed bottom-4 right-4 bg-pink-500 text-white p-3 rounded-full shadow-lg hover:bg-pink-600">
+    🔊
+  </button>
+
+  <div class="w-full max-w-3xl bg-white/90 backdrop-blur rounded-2xl shadow-xl p-6 md:p-12 m-6">
+    <!-- Step 1 -->
+    <div class="step active" id="step1">
+      <div class="emoji">❤️</div>
+      <h1 class="text-4xl md:text-5xl font-bold mb-6 text-gradient">Happy 19th Birthday Countdown 🎂</h1>
+      <div id="countdown" class="text-2xl font-semibold text-pink-600 mb-6"></div>
+      <p class="text-xl text-gray-700 mb-8">I made something special just for you, Khushboo ❤️</p>
+      <button class="btn" id="start-btn">Let's Begin</button>
+    </div>
+
+    <!-- Step 2 -->
+    <div class="step" id="step2">
+      <h2 class="text-3xl font-bold mb-4 text-gradient">A Special Message ✨</h2>
+      <p id="typed-text" class="text-lg text-gray-700 min-h-[120px]"></p>
+      <button class="btn mt-6" id="next2">Next 💌</button>
+    </div>
+
+    <!-- Step 3 -->
+    <div class="step" id="step3">
+      <h2 class="text-3xl font-bold mb-6 text-gradient">Our Beautiful Memories 📸</h2>
+      <div class="grid grid-cols-2 gap-4 gallery">
+        <img src="https://source.unsplash.com/300x300/?friendship" alt="memory1">
+        <img src="https://source.unsplash.com/300x300/?birthday" alt="memory2">
+        <img src="https://source.unsplash.com/300x300/?smile" alt="memory3">
+        <img src="https://source.unsplash.com/300x300/?celebration" alt="memory4">
+      </div>
+      <button class="btn mt-8" id="next3">Final Surprise 🎉</button>
+    </div>
+
+    <!-- Step 4 (Final) -->
+    <div class="step" id="step4">
+      <h1 class="text-5xl font-extrabold text-gradient mb-6">Happy 19th Birthday, Khushboo 🎂💖</h1>
+      <p class="text-xl text-gray-700 mb-6">
+        On this special day, I just want to remind you how amazing, beautiful, and inspiring you are.<br>
+        May your 19th year be filled with love, laughter, and endless happiness! 💫
+      </p>
+      <div class="emoji">🎉🎂🎁🎊</div>
+      <p class="text-lg mt-6">With all my heart ❤️</p>
+    </div>
+  </div>
+
+  <script>
+    // 🎂 Countdown to 18 Aug 2025 00:00:00
+    const countdown = document.getElementById("countdown");
+    const targetDate = new Date("Aug 18, 2025 00:00:00").getTime();
+    const timer = setInterval(() => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+      if (distance < 0) {
+        clearInterval(timer);
+        countdown.innerHTML = "🎉 Happy 19th Birthday, Khushboo! ❤️";
+        return;
+      }
+      const d = Math.floor(distance / (1000*60*60*24));
+      const h = Math.floor((distance%(1000*60*60*24))/(1000*60*60));
+      const m = Math.floor((distance%(1000*60*60))/(1000*60));
+      const s = Math.floor((distance%(1000*60))/1000);
+      countdown.innerHTML = `${d}d ${h}h ${m}m ${s}s left 🎂`;
+    },1000);
+
+    // 🎶 Music controls (autoplay on first user interaction)
+    const music = document.getElementById("bg-music");
+    const musicBtn = document.getElementById("music-btn");
+    document.addEventListener("click", () => {
+      if (music.paused) { music.play(); musicBtn.textContent="🔊"; }
+    }, { once:true });
+    musicBtn.addEventListener("click", () => {
+      if (music.paused) { music.play(); musicBtn.textContent="🔊"; }
+      else { music.pause(); musicBtn.textContent="🔇"; }
+    });
+
+    // 🌟 Step navigation
+    const steps = document.querySelectorAll(".step");
+    function showStep(n){
+      steps.forEach(s=>s.classList.remove("active"));
+      const el = document.getElementById("step"+n);
+      el.classList.add("active");
+      // trigger fireworks when final step shows
+      if (n === 4) launchFireworks();
+    }
+    document.getElementById("start-btn").onclick = () => showStep(2);
+    document.getElementById("next2").onclick = () => showStep(3);
+    document.getElementById("next3").onclick = () => showStep(4);
+
+    // ⌨️ Typed message in Step 2
+    new Typed("#typed-text", {
+      strings: [
+        "Dear Khushboo, on your 19th birthday… 💕",
+        "You bring so much joy, light, and love to everyone around you 🌸",
+        "May this year be filled with smiles, dreams coming true, and beautiful memories 🎁"
+      ],
+      typeSpeed: 40, backSpeed: 25, startDelay: 500, backDelay: 1100, loop: false
+    });
+
+    // 🎆 Fireworks (using canvas-confetti)
+    function launchFireworks() {
+      const duration = 6000;          // total fireworks time (ms)
+      const animationEnd = Date.now() + duration;
+
+      // fire two confetti cannons every frame at random positions
+      (function frame() {
+        // Random origin across the top half of the screen
+        confetti({
+          particleCount: 3,
+          startVelocity: 45,
+          spread: 70,
+          gravity: 0.9,
+          ticks: 200,
+          origin: { x: Math.random(), y: Math.random() * 0.4 }
+        });
+        confetti({
+          particleCount: 3,
+          startVelocity: 45,
+          spread: 70,
+          gravity: 0.9,
+          ticks: 200,
+          origin: { x: Math.random(), y: Math.random() * 0.4 }
+        });
+
+        // occasional big bursts that feel like fireworks
+        if (Math.random() < 0.08) {
+          confetti({
+            particleCount: 100,
+            spread: 120,
+            startVelocity: 55,
+            gravity: 0.8,
+            scalar: 1.1,
+            origin: { x: Math.random() * 0.8 + 0.1, y: Math.random() * 0.5 + 0.1 },
+            shapes: ['square', 'circle']
+          });
+        }
+
+        if (Date.now() < animationEnd) {
+          requestAnimationFrame(frame);
+        } else {
+          // Grand finale bursts
+          for (let i = 0; i < 4; i++) {
+            setTimeout(() => {
+              confetti({
+                particleCount: 160,
+                spread: 140,
+                startVelocity: 60,
+                gravity: 0.9,
+                origin: { x: 0.1 + 0.2 * i, y: 0.2 + (i%2)*0.15 }
+              });
+            }, i * 180);
+          }
+        }
+      })();
+    }
+  </script>
+</body>
+</html>
